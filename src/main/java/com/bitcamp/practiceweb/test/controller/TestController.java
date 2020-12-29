@@ -1,6 +1,8 @@
 package com.bitcamp.practiceweb.test.controller;
 
+import com.bitcamp.practiceweb.test.service.TestService;
 import com.bitcamp.practiceweb.test.vo.TestVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,5 +34,18 @@ public class TestController {
         TestVo testModel = new TestVo("yoojin", "유진") ;
         model.addAttribute("testModel", testModel);
         return "thymeleaf/thymeleafTest";
+    }
+
+    @Autowired
+    TestService testService;
+
+    @RequestMapping(value="/test2")
+    public ModelAndView test2() throws Exception{
+        ModelAndView mav = new ModelAndView("test");
+
+        List<TestVo> testList = testService.selectTest();
+        mav.addObject("list", testList);
+
+        return mav;
     }
 }
